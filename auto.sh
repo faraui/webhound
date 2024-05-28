@@ -33,14 +33,6 @@ sed -z 's/\n//g; s/>\s*</></g; s/>,\s*</>,</g; s/>.\s*</>.</g' > \
 $(echo $UTF_DOMAIN)_netcraft.html; rm -rf ZVhfCpi*; echo "[+] netcraft" ) &
 
 
-###########
-# cookies #
-###########
-#firefox "http$PROTOCOL://$ACE_DOMAIN"
-#( sleep 16; xdotool key Return; sleep 0.5 xdotool Return
-#sleep 1; xdotool key ctrl+Shift+i; echo "[+] cookies" ) &
-
-
 #######
 # dig #
 #######
