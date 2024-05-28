@@ -17,11 +17,12 @@ read -p "httpS? [y/n] " PROTOCOL
 if [[ $PROTOCOL =~ ^[nNmMbBтТьЬиИ] ]]; then PROTOCOL=""; else PROTOCOL="s"; fi
 echo
 
+URL="http$PROTOCOL://$ACE_DOMAIN"
 
 ############
 # netcraft #
 ############
-firefox "https://sitereport.netcraft.com/?url=http$PROTOCOL://$ACE_DOMAIN"
+firefox "https://sitereport.netcraft.com/?url=$URL"
 ( sleep 16; xdotool key ctrl+s
 sleep 1; xdotool key BackSpace; sleep 0.5; xdotool type "$PWD/ZVhfCpi"
 sleep 0.5; xdotool key Return; sleep 1; xdotool key Return
@@ -61,14 +62,14 @@ echo "[+] wafw00f"
 ###########
 # whatweb #
 ###########
-whatweb -a 1 http$PROTOCOL://$ACE_DOMAIN/  --log-brief=$(echo $UTF_DOMAIN)_whatweb.txt >/dev/null
+whatweb -a 1 $URL  --log-brief=$(echo $UTF_DOMAIN)_whatweb.txt >/dev/null
 echo "[+] whatweb"
 
 
 ##########
 # katana #
 ##########
-katana -u http$PROTOCOL://$ACE_DOMAIN/ -o $(echo $UTF_DOMAIN)_katana.txt >/dev/null 2>&1
+katana -u $URL -o $(echo $UTF_DOMAIN)_katana.txt >/dev/null 2>&1
 cp $(echo $UTF_DOMAIN)_katana.txt $(echo $UTF_DOMAIN)_urls_temp.txt 
 echo "[+] katana"
 
@@ -77,7 +78,7 @@ echo "[+] katana"
 # dirsearch #
 #############
 echo '[ ] dirsearch in progress'
-dirsearch -u http$PROTOCOL://$ACE_DOMAIN/ -o $(echo $UTF_DOMAIN)_dirsearch.txt -t 3 >/dev/null 2>&1
+dirsearch -u $URL -o $(echo $UTF_DOMAIN)_dirsearch.txt -t 3 >/dev/null 2>&1
 cat $(echo $UTF_DOMAIN)_dirsearch.txt | tr -s ' ' | cut -f 3 -d ' ' >> $(echo $UTF_DOMAIN)_urls_temp.txt
 cat $(echo $UTF_DOMAIN)_urls_temp.txt | sort -u | rg http  > $(echo $UTF_DOMAIN)_urls.txt; rm $(echo $UTF_DOMAIN)_urls_temp.txt 
 echo "[+] dirsearch"
