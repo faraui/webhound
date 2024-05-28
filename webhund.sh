@@ -58,11 +58,22 @@ grep -A 10000 'ing Toolkit' | sed '1d' > $(echo $UTF_DOMAIN)_wafw00f.txt
 echo "[+] wafw00f"
 
 
-######
+##########
+# katana #
+##########
+katana -u http$PROTOCOL://$ACE_DOMAIN/ -o $(echo $UTF_DOMAIN)_katana.txt >/dev/null 2>&1
+cp $(echo $UTF_DOMAIN)_katana.txt $(echo $UTF_DOMAIN)_urls_temp.txt 
+echo "[+] katana"
 
 
-######
-
+#############
+# dirsearch #
+#############
+echo '[ ] dirsearch in progress'
+dirsearch -u http$PROTOCOL://$ACE_DOMAIN/ -o $(echo $UTF_DOMAIN)_dirsearch.txt -t 3 >/dev/null 2>&1
+cat $(echo $UTF_DOMAIN)_dirsearch.txt | tr -s ' ' | cut -f 3 -d ' ' >> $(echo $UTF_DOMAIN)_urls_temp.txt
+cat $(echo $UTF_DOMAIN)_urls_temp.txt | sort -u | rg http  > $(echo $UTF_DOMAIN)_urls.txt; rm $(echo $UTF_DOMAIN)_urls_temp.txt 
+echo "[+] dirsearch"
 
 ######
 
