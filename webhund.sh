@@ -58,6 +58,13 @@ grep -A 10000 'ing Toolkit' | sed '1d' > $(echo $UTF_DOMAIN)_wafw00f.txt
 echo "[+] wafw00f"
 
 
+###########
+# whatweb #
+###########
+whatweb -a 1 http$PROTOCOL://$ACE_DOMAIN/  --log-brief=$(echo $UTF_DOMAIN)_whatweb.txt >/dev/null
+echo "[+] whatweb"
+
+
 ##########
 # katana #
 ##########
