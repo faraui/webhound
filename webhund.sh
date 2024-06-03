@@ -1,16 +1,17 @@
 #!/bin/sh
+
 sudo echo -n
 
 while true; do
-    read -p "Domain? [example.org] " UTF_DOMAIN
-    UTF_DOMAIN=$(echo $UTF_DOMAIN | sed 's/\(.*\)/\L\1/')
-    ACE_DOMAIN=$(idn $UTF_DOMAIN)
-    IP_ADRESS=$(dig $ACE_DOMAIN +short)
-    if [[ -z $IP_ADRESS ]]; then
-        echo "    ERROR. Incorrect domain." >&2
-    else
-        break
-    fi
+  read -p "Domain? [example.org] " UTF_DOMAIN
+  UTF_DOMAIN=$(echo $UTF_DOMAIN | sed 's/\(.*\)/\L\1/')
+  ACE_DOMAIN=$(idn $UTF_DOMAIN)
+  IP_ADRESS=$(dig $ACE_DOMAIN +short)
+  if [[ -z $IP_ADRESS ]]; then
+    echo "    ERROR. Incorrect domain." >&2
+  else
+    break
+  fi
 done
 
 read -p "httpS? [y/n] " PROTOCOL
@@ -18,6 +19,7 @@ if [[ $PROTOCOL =~ ^[nNmMbBтТьЬиИ] ]]; then PROTOCOL=""; else PROTOCOL="s"
 echo
 
 URL="http$PROTOCOL://$ACE_DOMAIN"
+
 
 ############
 # netcraft #
@@ -38,8 +40,8 @@ netcraft_$UTF_DOMAIN.html; rm -rf ZVhfCpi*; echo "[+] netcraft" ) &
 # dig #
 #######
 for ((i=1; i<=99; i++)); do
-    TYPE="TYPE$(printf "%02d" $i)"
-    dig $ACE_DOMAIN -t $TYPE +noall +answer >> dig_$UTF_DOMAIN.txt
+  TYPE="TYPE$(printf "%02d" $i)"
+  dig $ACE_DOMAIN -t $TYPE +noall +answer >> dig_$UTF_DOMAIN.txt
 done
 echo "[+] dig"
 
@@ -88,8 +90,8 @@ echo "[+] dirsearch"
 
 files=( * )
 for file in "${files[@]}"; do
-    dir="${file#*_}"; dir="${dir%.*}"
-    mkdir -p "$dir"; mv "$file" "$dir"
+  dir="${file#*_}"; dir="${dir%.*}"
+  mkdir -p "$dir"; mv "$file" "$dir"
 done
 mv webhund/webhund.sh .; rmdir webhund
 
