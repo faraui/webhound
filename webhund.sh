@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 sudo echo -n
 
 while true; do
